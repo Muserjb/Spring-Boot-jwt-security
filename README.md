@@ -11,4 +11,4 @@ Testing Using Postman Client
 
 Testing Using Postman Client
 
-![Screenshot (370)](https://github.com/Muserjb/Spring-Boot-jwt-security/assets/106866811/8ca480d9-daf3-4f76-b9d6-68ba70aa980a)
+![Screenshot (374)](https://github.com/Muserjb/Spring-Boot-jwt-security/assets/106866811/4b284e61-e890-4c75-8f98-b8d343e3a196)
