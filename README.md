@@ -6,7 +6,7 @@ Project Structure
 
 Testing Using Postman Client
 
-![Screenshot (371)](https://github.com/Muserjb/Spring-Boot-jwt-security/assets/106866811/af0ad6c9-fab9-4f61-b067-401979851f7f)
+![Screenshot (373)](https://github.com/Muserjb/Spring-Boot-jwt-security/assets/106866811/0d41ea8d-686b-4cb4-8aa0-ec10b5287dc9)
 
 
 Testing Using Postman Client
