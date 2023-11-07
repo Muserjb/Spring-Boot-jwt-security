@@ -4,6 +4,7 @@ package com.coder.security.config;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,15 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+
+    @Value("${spring.application.security.jwt.secret-Key}")
+    private String secretKey;
+
+    @Value("${spring.application.security.jwt.expiration}")
+    private long jwtExpiration;
+
+    @Value("${spring.application.security.jwt.expiration}")
+    private long refreshExpiration;
     public String extractUsername(String token) {
 
         return extractClaims(token, Claims::getSubject);
@@ -43,21 +52,24 @@ public class JwtService {
         return extractClaims(token, Claims::getExpiration);
     }
 
-    public String generateToken(
-            Map<String, Object> extractClaims,
-            UserDetails userDetails
-    )
-    {
+    public String generateToken(Map<String, Object> extractClaims, UserDetails userDetails){
+        return buildToken(extractClaims, userDetails, jwtExpiration);
+    }
+    public String generateRefreshToken(UserDetails userDetails ){
+        return buildToken(new HashMap<>() , userDetails, refreshExpiration);
+    }
+
+    private String buildToken(Map<String, Object> extractClaims, UserDetails userDetails, long jwtExpiration) {
         return Jwts
                 .builder()
                 .setClaims(extractClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 100 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
-
     }
+
 
     private Claims extractAllClaims(String token){
         return Jwts.parserBuilder()
@@ -69,7 +81,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyByte = Decoders.BASE64.decode((SECRET_KEY));
+        byte[] keyByte = Decoders.BASE64.decode((secretKey));
 
         return Keys.hmacShaKeyFor(keyByte);
     }

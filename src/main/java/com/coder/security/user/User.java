@@ -1,5 +1,6 @@
 package com.coder.security.user;
 
+import com.coder.security.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,6 @@ import java.util.List;
 @Entity
 @Table(name = "user_security")
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue //(strategy = GenerationType.AUTO)
     private Integer id;
@@ -31,6 +31,11 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
+
+
 
 
     @Override
