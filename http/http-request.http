@@ -1,0 +1,16 @@
+### Register User
+POST http://localhost:8080/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "first_name": "musa",
+  "last_name": "usman",
+  "email":  "musa@mail.com",
+  "password": "password"
+
+}
+
+> {% client.global.set("auth-token", response.body.access_token); %}
+
+
+###
